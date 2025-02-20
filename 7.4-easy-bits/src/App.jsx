@@ -1,38 +1,39 @@
+import { RecoilRoot, useRecoilState, useRecoilValue } from "recoil"
+import { jobAtom, messagingAtom, networkAtom, notificationAtom } from "./atoms"
 
-import './App.css'
-import { RecoilRoot, useRecoilValue, useSetRecoilState } from 'recoil'
-import { jobsAtom, messagingAtom, networkAtom, notificationsAtom, totalNotificationSelector } from './atoms'
-import { useMemo } from 'react'
-//RecoilRoot
 
 function App() {
-  return <RecoilRoot>
-    <MainApp />
-  </RecoilRoot>
+
+  
+  return (
+    
+    <RecoilRoot>
+      <MainApp/>
+    </RecoilRoot>
+   
+  )
 }
 
-function MainApp() {
-  const networkNotificationCount = useRecoilValue(networkAtom)
-  const jobsAtomCount = useRecoilValue(jobsAtom);
-  const notificationsAtomCount = useRecoilValue(notificationsAtom)
-  const messagingAtomCount = useRecoilValue(messagingAtom)
-  const totalNotificationCount = useRecoilValue(totalNotificationSelector);
+function MainApp(){
+  const networknotificationCount = useRecoilValue(networkAtom)
+  const jobsCount = useRecoilValue(jobAtom)
+  const [messageCount,setMessagingCount] = useRecoilState(messagingAtom)
+  const notificationCount = useRecoilValue(notificationAtom)
+  return(
+  <>
+ 
+  <button>home</button>
 
-  // const totalNotificationCount = useMemo(() => {
-  //   return networkNotificationCount + jobsAtomCount + notificationsAtomCount + messagingAtomCount;
-  // }, [networkNotificationCount, jobsAtomCount, notificationsAtomCount, messagingAtomCount]) 
+  <button>My network({networknotificationCount >= 100 ? "99+":networknotificationCount})</button>
+  <button>jobs({jobsCount})</button>
+  <button>Messaging({messageCount})</button>
+  <button>Notification({notificationCount})</button>
 
-  return (
-    <>
-      <button>Home</button>
-      
-      <button>My network ({networkNotificationCount >= 100 ? "99+" : networkNotificationCount})</button>
-      <button>Jobs {jobsAtomCount}</button>
-      <button>Messaging ({messagingAtomCount})</button>
-      <button>Notifications ({notificationsAtomCount})</button>
-
-      <button>Me ({totalNotificationCount})</button>
-    </>
+  <button onClick={()=>{
+    setMessagingCount(messageCount+ 1)
+  }}>Me</button>
+  
+  </>
   )
 }
 
